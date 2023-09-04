@@ -6,18 +6,14 @@ return {
     opts = {},
     keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
   },
-
-  -- configure neo-tree
   {
-    "neo-tree.nvim",
+    "LazyVim/LazyVim",
     opts = {
-      close_if_last_window = true,
-      filesystem = {
-        filtered_items = {
-          show_hidden = true,
-          respect_gitignore = true,
-        },
-      },
+      colorscheme = "catppuccin-mocha",
     },
+  },
+  {
+    "echasnovski/mini.pairs",
+    enabled = false,
   },
 }
