@@ -13,6 +13,7 @@ vim.keymap.del("n", "<c-/>")
 local lazyterm = function()
   Util.float_term(nil, { cwd = Util.get_root() })
 end
-
 vim.keymap.set("n", "<F4>", lazyterm, { desc = "Terminal (root dir)" })
 vim.keymap.set("t", "<F4>", "<cmd>close<cr>", { desc = "Hide Terminal" })
+
+
