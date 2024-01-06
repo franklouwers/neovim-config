@@ -20,6 +20,8 @@ vim.keymap.set('n', '<leader>fg', function() require("telescope.builtin").live_g
       -- vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
       -- vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
+vim.keymap.set("n", "<leader>cd", function() require("telescope").extensions.zoxide.list() end)
+
 -- Undo Tree
 vim.keymap.set('n', '<leader><F5>', vim.cmd.UndotreeToggle)
 
