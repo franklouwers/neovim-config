@@ -111,10 +111,6 @@ return {
           -- GOLANG
           "gopls", -- golang lsp
 
-          -- Python
-          "python-lsp-server",
-
-
         },
 
         handlers = {
