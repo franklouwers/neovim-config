@@ -10,7 +10,11 @@ return {
       "nvim-telescope/telescope.nvim", -- optional
       --    "ibhagwan/fzf-lua",              -- optional
     },
-    config = true
+    cmd = 'Neogit',
+    config = true,
+    opt = {
+      use_per_project_settings = false
+    }
   },
 
  { -- gitsigns: git interactionas and indicate changes in sidebar

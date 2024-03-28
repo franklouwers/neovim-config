@@ -12,25 +12,29 @@ vim.keymap.set({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
 
 -- Trigger Neo-Tree filetree:
 vim.keymap.set('n', '<C-n>', '<cmd>Neotree filesystem reveal left<CR>')
+-- vim.keymap.set('n', '<C-n>', function() vim.cmd.Neotree() require("edgy").open('left') end)
 vim.keymap.set('n', '<leader>n', '<cmd>Neotree buffers reveal float<CR>')
 
 -- Telescope
 vim.keymap.set('n', '<C-f>', function() require("telescope.builtin").find_files() end)
 vim.keymap.set('n', '<leader>fg', function() require("telescope.builtin").live_grep() end)
-      -- vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-      -- vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+-- vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+-- vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 vim.keymap.set("n", "<leader>cd", function() require("telescope").extensions.zoxide.list() end)
 
 -- Undo Telescope
-vim.keymap.set('n', '<F5>',"<cmd>Telescope undo<cr>")
+vim.keymap.set('n', '<F5>', "<cmd>Telescope undo<cr>")
 
 -- Troublelist
 vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
 
 -- cp to copy to system clipboard
-vim.keymap.set({'n', "v"}, 'cp', '"+y')
+vim.keymap.set({ 'n', "v" }, 'cp', '"+y')
 
+-- in visual mode, use option-\ («) to comment
+vim.keymap.set('x', "«", "<ESC><CMD>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>")
+-- normal mode is defined in comment.lua. Don't ask
 
 -- Defined by plugins:
 
@@ -39,7 +43,7 @@ vim.keymap.set({'n', "v"}, 'cp', '"+y')
 -- gcc to comment current line (Nomral mode)
 
 -- cmp:
--- when in completion: 
+-- when in completion:
 --   <C-space>: complete
 --   <C-u>: up
 --   <C-d>: down
@@ -66,7 +70,7 @@ vim.keymap.set({'n', "v"}, 'cp', '"+y')
 -- Surround:
 -- The three "core" operations of add/delete/change can be done with the keymaps:
 --   add:    ys{motion}{char},
---   delete: ds{char}, 
+--   delete: ds{char},
 --   change: cs{target}{replacement}
 --
 --   For the following examples, * will denote the cursor position:

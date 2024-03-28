@@ -5,7 +5,10 @@ return {
     'numToStr/Comment.nvim',
     opts = {
       -- ignores empty lines - vscode compatibility
-      ignore = '^$'
+      ignore = '^$',
+      toggler = {
+        line = '«',
+      },
     },
     lazy = false
   },
