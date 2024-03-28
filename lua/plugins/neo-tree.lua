@@ -24,7 +24,10 @@ return
       end
     })
   end,
+
   opts = {
+    open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy" },
+
     filesystem = {
       hijack_netrw_behavior = 'open_current',
       use_libuv_file_watcher = true,

@@ -6,6 +6,9 @@ return {
     vim.opt.splitkeep = "screen"
   end,
   opts = {
+    animate = {
+      enabled = false,
+    },
     exit_when_last = true, -- exit Neovim when only edgy windows are left
     bottom = {
       -- toggleterm / lazyterm at the bottom with a height of 40% of the screen

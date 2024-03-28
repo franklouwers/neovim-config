@@ -26,6 +26,9 @@ vim.keymap.set("n", "<leader>cd", function() require("telescope").extensions.zox
 -- Undo Telescope
 vim.keymap.set('n', '<F5>', "<cmd>Telescope undo<cr>")
 
+-- Undo Telescope
+vim.keymap.set('n', '<F6>', "<cmd>Navbuddy<cr>")
+
 -- Troublelist
 vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
 
@@ -35,6 +38,11 @@ vim.keymap.set({ 'n', "v" }, 'cp', '"+y')
 -- in visual mode, use option-\ («) to comment
 vim.keymap.set('x', "«", "<ESC><CMD>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>")
 -- normal mode is defined in comment.lua. Don't ask
+
+-- keep visual mode when indenting
+vim.keymap.set('v', ">", "> gv")
+vim.keymap.set('v', "<", "< gv")
+vim.keymap.set('v', "=", "= gv")
 
 -- Defined by plugins:
 

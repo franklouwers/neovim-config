@@ -82,10 +82,21 @@ return {
     dependencies = {
       { 'hrsh7th/cmp-nvim-lsp' },
       { 'williamboman/mason-lspconfig.nvim' },
+      {
+        "SmiteshP/nvim-navbuddy",
+        dependencies = {
+          { "SmiteshP/nvim-navic", config = function() require("nvim-navic").setup { highlight = true } end },
+          { "MunifTanjim/nui.nvim" },
+        },
+      },
     },
+
     config = function()
       -- This is where all the LSP shenanigans will live
       local lsp_zero = require('lsp-zero')
+      local navbuddy = require("nvim-navbuddy")
+      local actions = require("nvim-navbuddy.actions")
+
       lsp_zero.extend_lspconfig()
 
       lsp_zero.on_attach(function(client, bufnr)
@@ -93,6 +104,20 @@ return {
         -- to learn the available actions
         lsp_zero.default_keymaps({ buffer = bufnr })
       end)
+
+      navbuddy.setup {
+        lsp = { auto_attach = true },
+        mappings = {
+          ["<left>"] = actions.parent(),    -- Move to left panel
+          ["<right>"] = actions.children(), -- Move to right panel
+        },
+        -- integrations = {
+        --   navic = {
+        --     enabled = true,
+        --   },
+        -- },
+        custom_hl_group = "Visual",
+      }
 
       require("mason-lspconfig").setup({
         ensure_installed = {
