@@ -22,8 +22,14 @@ vim.keymap.set('n', '<leader>fg', function() require("telescope.builtin").live_g
 
 vim.keymap.set("n", "<leader>cd", function() require("telescope").extensions.zoxide.list() end)
 
--- Undo Tree
-vim.keymap.set('n', '<leader><F5>', vim.cmd.UndotreeToggle)
+-- Undo Telescope
+vim.keymap.set('n', '<F5>',"<cmd>Telescope undo<cr>")
+
+-- Troublelist
+vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
+
+-- cp to copy to system clipboard
+vim.keymap.set({'n', "v"}, 'cp', '"+y')
 
 
 -- Defined by plugins:

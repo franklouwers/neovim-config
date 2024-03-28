@@ -29,12 +29,13 @@ return {
     end
   },
 
- -- Autocompletion
+  -- Autocompletion
   {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {
-      {'L3MON4D3/LuaSnip'},
+      { 'L3MON4D3/LuaSnip' },
+      { 'onsails/lspkind.nvim' }
     },
     config = function()
       -- Here is where you configure the autocompletion settings.
@@ -44,9 +45,21 @@ return {
       -- And you can configure cmp even more, if you want to.
       local cmp = require('cmp')
       local cmp_action = lsp_zero.cmp_action()
+      local lspkind = require('lspkind')
 
       cmp.setup({
-        formatting = lsp_zero.cmp_format(),
+        -- formatting = lsp_zero.cmp_format(),
+        formatting = {
+          format = lspkind.cmp_format({
+            mode = 'symbol', -- show only symbol annotations
+            maxwidth = 50,   -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            -- can also be a function to dynamically calculate max width such as
+            -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
+            ellipsis_char = '...',      -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+            show_labelDetails = true,   -- show labelDetails in menu. Disabled by default
+          })
+        },
+
         mapping = cmp.mapping.preset.insert({
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
@@ -61,11 +74,11 @@ return {
   -- LSP
   {
     'neovim/nvim-lspconfig',
-    cmd = {'LspInfo', 'LspInstall', 'LspStart'},
-    event = {'BufReadPre', 'BufNewFile'},
+    cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
-      {'hrsh7th/cmp-nvim-lsp'},
-      {'williamboman/mason-lspconfig.nvim'},
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'williamboman/mason-lspconfig.nvim' },
     },
     config = function()
       -- This is where all the LSP shenanigans will live
@@ -75,7 +88,7 @@ return {
       lsp_zero.on_attach(function(client, bufnr)
         -- see :help lsp-zero-keybindings
         -- to learn the available actions
-        lsp_zero.default_keymaps({buffer = bufnr})
+        lsp_zero.default_keymaps({ buffer = bufnr })
       end)
 
       require("mason-lspconfig").setup({
@@ -111,21 +124,21 @@ return {
   },
 
 
-        -- K: info about symbol under cursor
-        -- gd: jump to definition of symbol
-        -- gD: jump to Declaration of the symbol
-        -- gi: list the implementation details
-        -- go: jump to definition of the type
-        -- gs: display signature information
-        -- <F2>: renames all refs
-        -- <F3>: format code in current buffer
-        -- <F4>: selection an action available
-        -- ---
-        -- Completion:
-        -- <C-y>: confirm selection
-        -- <C-e>: cancel completion
-        -- <C-p>: trigger completion menu
-  {                           -- install Mason packages (other than pure LSPs, which are defined above
+  -- K: info about symbol under cursor
+  -- gd: jump to definition of symbol
+  -- gD: jump to Declaration of the symbol
+  -- gi: list the implementation details
+  -- go: jump to definition of the type
+  -- gs: display signature information
+  -- <F2>: renames all refs
+  -- <F3>: format code in current buffer
+  -- <F4>: selection an action available
+  -- ---
+  -- Completion:
+  -- <C-y>: confirm selection
+  -- <C-e>: cancel completion
+  -- <C-p>: trigger completion menu
+  { -- install Mason packages (other than pure LSPs, which are defined above
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     config = function()
       require('mason-tool-installer').setup({

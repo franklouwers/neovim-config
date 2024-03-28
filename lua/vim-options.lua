@@ -4,6 +4,9 @@ vim.o.tabstop = 2
 vim.o.softtabstop = 2
 vim.o.shiftwidth = 2
 
+-- round tabs
+vim.o.shiftround = true
+
 -- numbers
 vim.wo.number = true
 
