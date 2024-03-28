@@ -55,8 +55,8 @@ return {
             maxwidth = 50,   -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
             -- can also be a function to dynamically calculate max width such as
             -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
-            ellipsis_char = '...',      -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-            show_labelDetails = true,   -- show labelDetails in menu. Disabled by default
+            ellipsis_char = '...',    -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+            show_labelDetails = true, -- show labelDetails in menu. Disabled by default
           })
         },
 
@@ -66,6 +66,8 @@ return {
           ['<C-d>'] = cmp.mapping.scroll_docs(4),
           ['<C-f>'] = cmp_action.luasnip_jump_forward(),
           ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+          ['<CR>'] = cmp.mapping.confirm({ select = false }),
+
         })
       })
     end
@@ -76,6 +78,7 @@ return {
     'neovim/nvim-lspconfig',
     cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
     event = { 'BufReadPre', 'BufNewFile' },
+
     dependencies = {
       { 'hrsh7th/cmp-nvim-lsp' },
       { 'williamboman/mason-lspconfig.nvim' },
@@ -107,6 +110,9 @@ return {
 
           -- GOLANG
           "gopls", -- golang lsp
+
+          -- Python
+          "python-lsp-server",
 
 
         },
@@ -157,6 +163,10 @@ return {
 
           -- ZSH / BASH
           "beautysh", -- bash beautifier
+
+
+          -- PYTHON
+          "python-lsp-server",
 
 
           -- GENERAL
