@@ -111,11 +111,6 @@ return {
           ["<left>"] = actions.parent(),    -- Move to left panel
           ["<right>"] = actions.children(), -- Move to right panel
         },
-        -- integrations = {
-        --   navic = {
-        --     enabled = true,
-        --   },
-        -- },
         custom_hl_group = "Visual",
       }
 
