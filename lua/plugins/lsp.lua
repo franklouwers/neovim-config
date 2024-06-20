@@ -121,7 +121,7 @@ return {
           "lua_ls", -- lua lsp
 
           -- RUBY
-          "ruby_ls",    -- ruby lsp
+          "ruby_lsp",   -- ruby lsp
           "standardrb", -- ruby linting and style
 
           -- TERRAFORM
