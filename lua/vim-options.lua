@@ -55,3 +55,10 @@ vim.api.nvim_create_autocmd('User', {
     require("neo-tree.sources.manager").refresh("filesystem")
   end
 })
+
+-- tf files are always terraform, not "tf" (whatever that is)
+vim.filetype.add({
+  extension = {
+    tf = 'terraform'
+  }
+})
