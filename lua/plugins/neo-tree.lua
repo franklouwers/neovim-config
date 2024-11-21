@@ -30,6 +30,13 @@ return
 
     filesystem = {
       hijack_netrw_behavior = 'open_current',
+      filtered_items = {
+        visible = true, -- visible, but different
+        hide_dotfiles = false,
+        hide_by_name = {
+          ".git"
+        }
+      },
       use_libuv_file_watcher = true,
       follow_current_file = {
         enabled = true
