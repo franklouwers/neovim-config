@@ -43,9 +43,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
--- format on save
-vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
-
 -- On neogit event, update neotree git status
 local group = vim.api.nvim_create_augroup('MyCustomNeogitEvents', { clear = true })
 vim.api.nvim_create_autocmd('User', {
@@ -62,3 +59,6 @@ vim.filetype.add({
     tf = 'terraform'
   }
 })
+
+-- format on save
+vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
