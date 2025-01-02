@@ -176,6 +176,7 @@ return {
           -- GOLANG
           'golangci-lint', -- Golang lint
           'goimports',     -- Golang fmt
+          'gopls',         -- Go language server
 
           -- ZSH / BASH
           "beautysh", -- bash beautifier
@@ -184,12 +185,15 @@ return {
           -- PYTHON
           "python-lsp-server",
 
+          -- TERRAFORM
+          "terraformls",
+
 
           -- GENERAL
           'editorconfig-checker',
           "semgrep", -- static analysis to detect bugs. go, json, js, php, python, ruby, ...
           "trivy",   -- security scans, misconfigs in multiple languages (including go, docker, helm, ruby, terraform, ...
-
+          "marsman", -- markdown
         },
 
         -- if set to true this will check each tool for updates. If updates
