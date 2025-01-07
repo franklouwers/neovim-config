@@ -55,7 +55,14 @@ return {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { 'lsp', 'path', 'snippets' },
+        default = { 'lazydev', 'lsp', 'path', 'snippets' },
+        providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            score_offset = 100, -- make priority
+          },
+        },
       },
       completion = {
         -- auto show docs
@@ -97,46 +104,8 @@ return {
 
       -- if not installed, add a few default Language Servers via Mason
       require("mason-lspconfig").setup({
-        ensure_installed = {
-          --   -- ANSIBLE
-          --   "ansiblels",
-          --   "jinja_lsp",
-
-          --   -- HELM
-          --   "helm_ls",
-
-          --   -- MARKDOWN
-          --   "marksman",
-
-          --   --- LUA
-          --   "lua_ls",   -- lua lsp
-          --   "luacheck", -- lua linter
-
-          --   -- RUBY
-          --   "ruby_lsp",   -- ruby lsp
-          --   "standardrb", -- ruby linting and style
-
-          --   -- TERRAFORM
-          --   "terraformls", -- terraform lsp
-          --   "tflint",      -- terraform linting
-
-          --   -- GOLANG
-          --   "gopls",         -- golang lsp
-          --   'golangci-lint', -- Golang lint
-          --   'goimports',     -- Golang fmt
-
-          --   -- PYTHON
-          --   "python-lsp-server",
-
-          --   -- ZSH / BASH
-          --   "beautysh", -- bash beautifier
-
-          --   -- GENERAL
-          --   'editorconfig-checker',
-          --   "semgrep", -- static analysis to detect bugs. go, json, js, php, python, ruby, ...
-          --   "trivy",   -- security scans, misconfigs in multiple languages (including go, docker, helm, ruby, terraform, ...
-
-        },
+        automatic_installation = false, -- mason-installer does this
+        ensure_installed = {},
 
         -- this first function is the "default handler"
         -- it applies to every language server without a "custom handler"
@@ -223,6 +192,18 @@ return {
       }
     end
   },
+  -- adjust lua ls for lua-vim config
+  {
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts = {
+      library = {
+        "~/.config/nvim",
+        "lazy.vim",
+      }
+    }
+  },
+
 
 
   -- K: info about symbol under cursor
