@@ -31,47 +31,52 @@ return {
 
   -- Autocompletion
   {
-    'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
+    'saghen/blink.cmp',
     dependencies = {
-      { 'L3MON4D3/LuaSnip' },
-      { 'onsails/lspkind.nvim' }
+      { "saghen/blink.compat", version = "*", lazy = true, opts = {} },
+      'rafamadriz/friendly-snippets',
+      "hrsh7th/cmp-emoji",
     },
-    config = function()
-      -- Here is where you configure the autocompletion settings.
-      local lsp_zero = require('lsp-zero')
-      lsp_zero.extend_cmp()
 
-      -- And you can configure cmp even more, if you want to.
-      local cmp = require('cmp')
-      local cmp_action = lsp_zero.cmp_action()
-      local lspkind = require('lspkind')
+    -- use a release tag to download pre-built binaries
+    version = '*',
+    -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+    -- build = 'cargo build --release',
+    -- If you use nix, you can build from source using latest nightly rust with:
+    -- build = 'nix run .#build-plugin',
 
-      cmp.setup({
-        -- formatting = lsp_zero.cmp_format(),
-        formatting = {
-          format = lspkind.cmp_format({
-            mode = 'symbol', -- show only symbol annotations
-            maxwidth = 50,   -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-            -- can also be a function to dynamically calculate max width such as
-            -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
-            ellipsis_char = '...',    -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-            show_labelDetails = true, -- show labelDetails in menu. Disabled by default
-          })
-        },
+    opts = {
+      -- 'default' for mappings similar to built-in completion
+      -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
+      -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
+      -- See the full "keymap" documentation for information on defining your own keymap.
+      keymap = { preset = 'super-tab' },
 
-        mapping = cmp.mapping.preset.insert({
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-d>'] = cmp.mapping.scroll_docs(4),
-          ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-          ['<C-b>'] = cmp_action.luasnip_jump_backward(),
-          ['<CR>'] = cmp.mapping.confirm({ select = false }),
+      signature = { enabled = true },
 
-        })
-      })
-    end
+      appearance = {
+        -- Sets the fallback highlight groups to nvim-cmp's highlight groups
+        -- Useful for when your theme doesn't support blink.cmp
+        -- Will be removed in a future release
+        use_nvim_cmp_as_default = true,
+        -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+        -- Adjusts spacing to ensure icons are aligned
+        nerd_font_variant = 'mono'
+      },
+
+      -- Default list of enabled providers defined so that you can extend it
+      -- elsewhere in your config, without redefining it, due to `opts_extend`
+      sources = {
+        default = { 'lsp', 'path', 'snippets' },
+      },
+      completion = {
+        -- auto show docs
+        documentation = { auto_show = true, auto_show_delay_ms = 500 },
+      },
+    },
+    opts_extend = { "sources.default" },
   },
+
 
   -- LSP
   {
@@ -80,7 +85,7 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
 
     dependencies = {
-      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'saghen/blink.cmp' },
       { 'williamboman/mason-lspconfig.nvim' },
       {
         "SmiteshP/nvim-navbuddy",
@@ -96,6 +101,8 @@ return {
       local lsp_zero = require('lsp-zero')
       local navbuddy = require("nvim-navbuddy")
       local actions = require("nvim-navbuddy.actions")
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
+      local servers = {}
 
       lsp_zero.extend_lspconfig()
 
@@ -113,6 +120,7 @@ return {
         },
         custom_hl_group = "Visual",
       }
+
 
       require("mason-lspconfig").setup({
         ensure_installed = {
@@ -135,6 +143,11 @@ return {
 
         handlers = {
           lsp_zero.default_setup,
+          function(server_name)
+            local server = servers[server_name] or {}
+            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            require('lspconfig')[server_name].setup(server)
+          end,
           lua_ls = function()
             -- (Optional) Configure lua language server for neovim
             local lua_opts = lsp_zero.nvim_lua_ls()
@@ -191,9 +204,9 @@ return {
 
           -- GENERAL
           'editorconfig-checker',
-          "semgrep", -- static analysis to detect bugs. go, json, js, php, python, ruby, ...
-          "trivy",   -- security scans, misconfigs in multiple languages (including go, docker, helm, ruby, terraform, ...
-          "marsman", -- markdown
+          "semgrep",  -- static analysis to detect bugs. go, json, js, php, python, ruby, ...
+          "trivy",    -- security scans, misconfigs in multiple languages (including go, docker, helm, ruby, terraform, ...
+          "marksman", -- markdown
         },
 
         -- if set to true this will check each tool for updates. If updates

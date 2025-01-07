@@ -29,7 +29,6 @@ return {
             return not vim.b[buf].lazyterm_cmd
           end,
         },
-        "Trouble",
         { ft = "qf",            title = "QuickFix" },
         {
           ft = "help",

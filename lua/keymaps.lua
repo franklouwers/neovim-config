@@ -32,6 +32,10 @@ vim.keymap.set('n', '<F6>', "<cmd>Navbuddy<cr>")
 -- Troublelist
 vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
 
+-- go to next issue in this file
+vim.keymap.set("n", "]g", vim.diagnostic.goto_next)
+vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
+
 -- cp to copy to system clipboard
 vim.keymap.set({ 'n', "v" }, 'cp', '"+y')
 
@@ -49,17 +53,6 @@ vim.keymap.set('v', "=", "= gv")
 -- Comments:
 -- gc to comment visual region
 -- gcc to comment current line (Nomral mode)
-
--- cmp:
--- when in completion:
---   <C-space>: complete
---   <C-u>: up
---   <C-d>: down
---   <C-f>: jump forward
---   <C-b>: jump backward
---   <C-y>: confirm selection
---   <C-e>: cancel completion
--- <C-p>: trigger completion menu
 
 -- lsp:
 -- K: info about symbol under cursor
