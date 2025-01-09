@@ -13,12 +13,12 @@ vim.keymap.set({ "n", "x" }, "<leader>sr", function() require("ssr").open() end)
 -- Trigger Neo-Tree filetree:
 vim.keymap.set('n', '<C-n>', '<cmd>Neotree filesystem reveal left<CR>')
 -- vim.keymap.set('n', '<C-n>', function() vim.cmd.Neotree() require("edgy").open('left') end)
-vim.keymap.set('n', '<leader>n', '<cmd>Neotree buffers reveal float<CR>')
 
 -- Telescope
-vim.keymap.set('n', '<C-f>', function() require("telescope.builtin").find_files() end)
-vim.keymap.set('n', '<leader>fg', function() require("telescope.builtin").live_grep() end)
--- vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>ff', function() require("telescope.builtin").find_files() end, { desc = "Find files" })
+vim.keymap.set('n', '<leader>fg', function() require("telescope.builtin").live_grep() end, { desc = "Grep in files" })
+vim.keymap.set('n', '<leader>fb', function() require("telescope.builtin").buffers() end, { desc = "Show buffers" })
+vim.keymap.set('n', '<leader>fq', function() require("telescope.builtin").diagnostics() end, { desc = "Show fixlist" })
 -- vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 vim.keymap.set("n", "<leader>cd", function() require("telescope").extensions.zoxide.list() end)
@@ -30,7 +30,8 @@ vim.keymap.set('n', '<F5>', "<cmd>Telescope undo<cr>")
 vim.keymap.set('n', '<F6>', "<cmd>Navbuddy<cr>")
 
 -- Troublelist
-vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
+vim.keymap.set("n", "<Leader>l", function() require("lsp_lines").toggle() end, { desc = "Toggle lsp_lines" })
+
 
 -- go to next issue in this file
 vim.keymap.set("n", "]g", vim.diagnostic.goto_next)

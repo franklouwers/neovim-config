@@ -1,31 +1,23 @@
 return {
   {
-    "zootedb0t/citruszest.nvim",
+    'rebelot/kanagawa.nvim',
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme "citruszest"
+      require("kanagawa").setup({
+        overrides = function(colors)
+          local theme = colors.theme
+          return {
+            Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 }, -- add `blend = vim.o.pumblend` to enable transparency
+            PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
+            PmenuSbar = { bg = theme.ui.bg_m1 },
+            PmenuThumb = { bg = theme.ui.bg_p2 },
+          }
+        end
+      })
+      vim.cmd.colorscheme "kanagawa"
     end
   },
-  -- {
-  --   "catppuccin/nvim",
-  --   lazy = false,
-  --   name = "catppuccin",
-  --   priority = 1000,
-  --   config = function()
-  --     require("catppuccin").setup({
-  --       dim_inactive = {
-  --         enabled = true,
-  --       },
-  --       integrations = {
-  --         navic = {
-  --           enabled = true,
-  --         },
-  --       },
-  --     })
-  --     vim.cmd.colorscheme "catppuccin-mocha"
-  --   end,
-  -- },
 
   -- better window separators
   {

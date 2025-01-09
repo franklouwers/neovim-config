@@ -23,16 +23,13 @@ return {
     dependencies = {
       { "saghen/blink.compat", version = "*", lazy = true, opts = {} },
       'rafamadriz/friendly-snippets',
-      "hrsh7th/cmp-emoji",
     },
 
     -- use a release tag to download pre-built binaries
     version = '*',
-    -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-    -- build = 'cargo build --release',
-    -- If you use nix, you can build from source using latest nightly rust with:
-    -- build = 'nix run .#build-plugin',
 
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
     opts = {
       -- 'default' for mappings similar to built-in completion
       -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
@@ -40,7 +37,7 @@ return {
       -- See the full "keymap" documentation for information on defining your own keymap.
       keymap = { preset = 'super-tab' },
 
-      signature = { enabled = true },
+      signature = { enabled = false },
 
       appearance = {
         -- Sets the fallback highlight groups to nvim-cmp's highlight groups
@@ -55,7 +52,7 @@ return {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { 'lazydev', 'lsp', 'path', 'snippets' },
+        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
         providers = {
           lazydev = {
             name = "LazyDev",
@@ -65,8 +62,24 @@ return {
         },
       },
       completion = {
+        -- menu = {
+        --   border = 'shadow'
+        -- },
         -- auto show docs
-        documentation = { auto_show = true, auto_show_delay_ms = 500 },
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 500,
+          -- window = {
+          --   border = 'rounded'
+          -- },
+        },
+        ghost_text = {
+          enabled = true
+        },
+
+        trigger = {
+          show_in_snippet = false
+        },
       },
     },
     opts_extend = { "sources.default" },
@@ -80,7 +93,6 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
 
     dependencies = {
-      { 'saghen/blink.cmp' },
       { 'williamboman/mason.nvim' },
       { 'williamboman/mason-lspconfig.nvim' },
     },
@@ -92,16 +104,6 @@ return {
     end,
 
     config = function()
-      -- add blink capabilities to LSP.
-      -- This should be executed before you configure any language server
-
-      local lspconfig_defaults = require('lspconfig').util.default_config
-      lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-        'force',
-        lspconfig_defaults.capabilities,
-        require('blink.cmp').get_lsp_capabilities()
-      )
-
       -- if not installed, add a few default Language Servers via Mason
       require("mason-lspconfig").setup({
         automatic_installation = false, -- mason-installer does this
