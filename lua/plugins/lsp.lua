@@ -22,7 +22,7 @@ return {
     'saghen/blink.cmp',
     dependencies = {
       { "saghen/blink.compat", version = "*", lazy = true, opts = {} },
-      'rafamadriz/friendly-snippets',
+      -- 'rafamadriz/friendly-snippets',
     },
 
     -- use a release tag to download pre-built binaries
@@ -52,7 +52,7 @@ return {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'lazydev', 'lsp', 'path', 'buffer' },
         providers = {
           lazydev = {
             name = "LazyDev",
@@ -121,7 +121,7 @@ return {
         },
       })
 
-      require('lspconfig').gh_actions_ls.setup({}) -- not via mason yet
+      --      require('lspconfig').gh_actions_ls.setup({}) -- not via mason yet
 
       -- This is where you enable features that only work
       -- if there is a language server active in the file

@@ -1,9 +1,9 @@
 return {
-  "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  "rachartier/tiny-inline-diagnostic.nvim",
+  event = "VeryLazy", -- Or `LspAttach`
+  priority = 1000,    -- needs to be loaded in first
   config = function()
-    require("lsp_lines").setup()
-    vim.diagnostic.config({
-      virtual_text = false,
-    })
-  end,
+    require('tiny-inline-diagnostic').setup()
+  end
 }
+
