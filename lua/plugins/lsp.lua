@@ -118,6 +118,17 @@ return {
 
           -- this is the custom handler for 'example client'
           -- example_server = function ...
+          pylsp = function()
+            require('lspconfig').pylsp.setup {
+              settings = {
+                pylsp = {
+                  plugins = {
+                    autopep8 = { enabled = true },
+                  }
+                }
+              }
+            }
+          end
         },
       })
 
@@ -209,8 +220,6 @@ return {
   },
 
 
-
-  -- K: info about symbol under cursor
   -- gd: jump to definition of symbol
   -- gD: jump to Declaration of the symbol
   -- gi: list the implementation details
