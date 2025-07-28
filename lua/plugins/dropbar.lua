@@ -1,3 +1,6 @@
+-- deactived, as broken for now
+-- return {}
+
 return {
   'Bekaboo/dropbar.nvim',
   -- optional, but required for fuzzy finder support
