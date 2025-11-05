@@ -1,5 +1,8 @@
 return {
   {
+    'nvim-mini/mini.animate', version = '*'
+  },
+  {
     "folke/edgy.nvim",
     event = "VeryLazy",
     init = function()
@@ -7,10 +10,6 @@ return {
       vim.opt.splitkeep = "screen"
     end,
     opts = {
-      animate = {
-        enabled = false,
-      },
-      exit_when_last = true, -- exit Neovim when only edgy windows are left
       bottom = {
         -- toggleterm / lazyterm at the bottom with a height of 40% of the screen
         {
@@ -39,6 +38,7 @@ return {
           end,
         },
         { ft = "spectre_panel", size = { height = 0.4 } },
+        { ft = "claude",        size = { height = 0.4 } },
       },
       left = {
         -- Neo-tree filesystem always takes half the screen height
@@ -48,7 +48,7 @@ return {
           filter = function(buf)
             return vim.b[buf].neo_tree_source == "filesystem" and vim.b[buf].neo_tree_position ~= "float"
           end,
-          size = { height = 0.5 },
+          size = { height = 0.1 },
         },
         {
           title = "Buffers",

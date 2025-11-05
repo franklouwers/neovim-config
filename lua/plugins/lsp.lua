@@ -37,7 +37,7 @@ return {
       -- See the full "keymap" documentation for information on defining your own keymap.
       keymap = { preset = 'super-tab' },
 
-      signature = { enabled = false },
+      signature = { enabled = true },
 
       appearance = {
         -- Sets the fallback highlight groups to nvim-cmp's highlight groups
@@ -74,7 +74,7 @@ return {
           -- },
         },
         ghost_text = {
-          enabled = true
+          enabled = false
         },
 
         trigger = {

@@ -54,11 +54,11 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 -- tf files are always terraform, not "tf" (whatever that is)
-vim.filetype.add({
-  extension = {
-    tf = 'terraform'
-  }
-})
+-- vim.filetype.add({
+--   extension = {
+--     tf = 'terraform'
+--   }
+-- })
 
 -- format on save
 vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]

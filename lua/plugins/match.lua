@@ -23,5 +23,14 @@ return {
         -- Configuration here, or leave empty to use defaults
       })
     end
+  },
+  -- underline current word
+  {
+    'nvim-mini/mini.cursorword',
+    version = '*',
+    config = function()
+      require('mini.cursorword').setup()
+    end
   }
+
 }

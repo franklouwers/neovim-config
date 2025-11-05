@@ -40,10 +40,6 @@ vim.keymap.set("n", "[g", vim.diagnostic.goto_prev)
 -- cp to copy to system clipboard
 vim.keymap.set({ 'n', "v" }, 'cp', '"+y')
 
--- in visual mode, use option-\ («) to comment
-vim.keymap.set('x', "«", "<ESC><CMD>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>")
--- normal mode is defined in comment.lua. Don't ask
-
 -- keep visual mode when indenting
 vim.keymap.set('v', ">", "> gv")
 vim.keymap.set('v', "<", "< gv")
