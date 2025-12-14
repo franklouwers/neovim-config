@@ -29,6 +29,8 @@ local servers = {
   'gopls',
   'ruby_lsp',
   'pylsp',
+  'ts_ls',
+  'volar',
   'tofu_ls',
   'marksman',
   'ansiblels',
