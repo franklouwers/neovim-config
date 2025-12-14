@@ -29,7 +29,7 @@ local servers = {
   'gopls',
   'ruby_lsp',
   'pylsp',
-  'terraformls',
+  'tofu_ls',
   'marksman',
   'ansiblels',
   'helm_ls',
