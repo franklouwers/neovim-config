@@ -1,1 +1,13 @@
-TODO
+# Neovim generated
+spell/
+plugin/
+.netrwhist
+
+# Logs
+*.log
+
+# Sessions
+Session.vim
+
+# Local overrides
+lua/local.lua
