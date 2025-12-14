@@ -17,7 +17,7 @@ return {
         nerd_font_variant = 'mono'
       },
       sources = {
-        default = { 'lazydev', 'lsp', 'path', 'buffer' },
+        default = { 'lsp', 'lazydev', 'path', 'buffer' },
         providers = {
           lazydev = {
             name = "LazyDev",
@@ -32,7 +32,7 @@ return {
           auto_show_delay_ms = 500,
         },
         ghost_text = { enabled = false },
-        trigger = { show_in_snippet = false },
+        trigger = { show_in_snippet = true },
       },
     },
     opts_extend = { "sources.default" },
