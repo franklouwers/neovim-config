@@ -1,12 +1,8 @@
--- deactived, as broken for now
--- return {}
-
 return {
   'Bekaboo/dropbar.nvim',
-  -- optional, but required for fuzzy finder support
+  event = "BufReadPost",
   dependencies = {
-    'nvim-telescope/telescope-fzf-native.nvim',
-    build = 'make'
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   },
   config = function()
     local dropbar_api = require('dropbar.api')

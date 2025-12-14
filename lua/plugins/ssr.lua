@@ -1,6 +1,6 @@
--- structural search and replace
--- https://github.com/cshuaimin/ssr.nvim/
-
 return {
-  { "cshuaimin/ssr.nvim", lazy = true },
+  "cshuaimin/ssr.nvim",
+  keys = {
+    { "<leader>sr", function() require("ssr").open() end, mode = { "n", "x" }, desc = "Structural S&R" },
+  },
 }

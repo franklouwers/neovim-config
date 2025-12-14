@@ -47,12 +47,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- On neogit event, update neotree git status
-local group = vim.api.nvim_create_augroup('MyCustomNeogitEvents', { clear = true })
 vim.api.nvim_create_autocmd('User', {
   pattern = 'NeogitStatusRefreshed',
-  group = group,
+  group = vim.api.nvim_create_augroup('MyCustomNeogitEvents', { clear = true }),
   callback = function()
-    require("neo-tree.sources.manager").refresh("filesystem")
+    local ok, manager = pcall(require, "neo-tree.sources.manager")
+    if ok then manager.refresh("filesystem") end
   end
 })
 
@@ -72,16 +72,20 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- auto resize splits when the terminal's window is resized
-vim.api.nvim_create_autocmd("VimResized", {
-  command = "wincmd =",
+-- vim.api.nvim_create_autocmd("VimResized", {
+--   command = "wincmd =",
+-- })
+--
+-- tf files are always terraform, not "tf" (whatever that is)
+vim.filetype.add({
+  extension = {
+    tf = 'terraform'
+  }
 })
 
--- tf files are always terraform, not "tf" (whatever that is)
--- vim.filetype.add({
---   extension = {
---     tf = 'terraform'
---   }
--- })
-
 -- format on save
-vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+vim.api.nvim_create_autocmd("BufWritePre", {
+  callback = function()
+    vim.lsp.buf.format()
+  end,
+})

@@ -1,9 +1,5 @@
-return {   -- which key should I use?
+return {
   'folke/which-key.nvim',
   event = "VeryLazy",
-  config = function()
-    require('which-key').setup(
-      { plugins = { spelling = true } }
-    )
-  end,
+  opts = { plugins = { spelling = true } },
 }

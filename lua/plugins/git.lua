@@ -1,5 +1,4 @@
 return {
-
   {
     "NeogitOrg/neogit",
     dependencies = {
@@ -11,21 +10,16 @@ return {
       --    "ibhagwan/fzf-lua",              -- optional
     },
     cmd = 'Neogit',
-    config = function()
-      local neogit = require('neogit')
-      neogit.setup({
-        use_per_project_settings = false,
-        graph_style = 'unicode',
-      })
-    end,
+    opts = {
+      use_per_project_settings = false,
+      graph_style = 'unicode',
+    },
 
   },
 
-  { -- gitsigns: git interactionas and indicate changes in sidebar
+  { -- gitsigns: git interactions and indicate changes in sidebar
     "lewis6991/gitsigns.nvim",
-    config = function()
-      require('gitsigns').setup() -- batteries included
-    end
-
+    event = "BufReadPre",
+    opts = {},
   }
 }

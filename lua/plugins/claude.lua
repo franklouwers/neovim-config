@@ -1,94 +1,58 @@
--- depends on toggleterm
--- config "inspired by" (stolen from) https://github.com/coder/claudecode.nvim/issues/96#issuecomment-3138720924
+local function toggleterm_provider()
+  local terminal = nil
 
-local function smart_toggle(term)
-  if term:is_open() then
-    if term:is_focused() then
-      term:close()
-    else
-      term:focus()
-    end
-  else
-    term:open()
-  end
-end
-
-local toggle_key = "<C-t>"
-
-local function setup_toggleterm_provider()
-  local claude_terminal = {}
-
-  local toggleterm_provider = {
-    setup = function(config)
-      local Terminal = require("toggleterm.terminal").Terminal
-      claude_terminal = Terminal:new({
-        direction = "vertical",
-        size = 80,
-        on_open = function(t)
-          vim.keymap.set({ "n", "t" }, toggle_key, function()
-            t:toggle()
-          end, { noremap = true, silent = true, buffer = t.bufnr })
-        end,
-      })
+  return {
+    is_available = function()
+      return pcall(require, "toggleterm")
     end,
 
-    open = function(cmd_string, env_table, effective_config, focus)
-      claude_terminal.cmd = cmd_string
-      claude_terminal.env = env_table
-      claude_terminal:open()
+    setup = function()
+      local Terminal = require("toggleterm.terminal").Terminal
+      terminal = Terminal:new({ direction = "horizontal", size = 30 })
+    end,
+
+    open = function(cmd, env)
+      terminal.cmd = cmd
+      terminal.env = env
+      terminal:open()
     end,
 
     close = function()
-      claude_terminal:close()
+      if terminal then terminal:close() end
     end,
 
-    simple_toggle = function(cmd_string, env_table, effective_config)
-      claude_terminal.cmd = cmd_string
-      claude_terminal.env = env_table
-      claude_terminal:toggle()
+    simple_toggle = function(cmd, env)
+      terminal.cmd = cmd
+      terminal.env = env
+      terminal:toggle()
     end,
 
-    focus_toggle = function(cmd_string, env_table, effective_config)
-      claude_terminal.cmd = cmd_string
-      claude_terminal.env = env_table
-      smart_toggle(claude_terminal)
+    focus_toggle = function(cmd, env)
+      terminal.cmd = cmd
+      terminal.env = env
+      if terminal:is_open() then
+        if terminal:is_focused() then terminal:close() else terminal:focus() end
+      else
+        terminal:open()
+      end
     end,
 
     get_active_bufnr = function()
-      if claude_terminal.bufnr then
-        return claude_terminal.bufnr
-      end
-      return nil
-    end,
-
-    is_available = function()
-      local ok, _ = pcall(require, "toggleterm")
-      return ok
+      return terminal and terminal.bufnr
     end,
   }
-
-  return toggleterm_provider
 end
-
 
 return {
   "coder/claudecode.nvim",
   dependencies = { "akinsho/toggleterm.nvim" },
-  config = true,
+  event = "VeryLazy",
   opts = {
-    -- Send/Focus Behavior
-    -- When true, successful sends will focus the Claude terminal if already connected
-    focus_after_send = false,
-    -- Terminal Configuration
     terminal = {
-      split_side = "right",                   -- "left" or "right"
-      split_width_percentage = 0.30,
-      provider = setup_toggleterm_provider(), -- "auto", "snacks", "native", "external", "none", or custom provider table
+      provider = toggleterm_provider(),
       auto_close = true,
-      --      snacks_win_opts = {}, -- Opts to pass to `Snacks.terminal.open()` - see Floating Window section below
     }
   },
-  event = "VeryLazy",
   keys = {
     { "<leader>a",  nil,                              desc = "AI/Claude Code" },
     { "<leader>ac", "<cmd>ClaudeCode<cr>",            desc = "Toggle Claude" },
@@ -102,7 +66,6 @@ return {
       desc = "Add file",
       ft = { "NvimTree", "neo-tree" },
     },
-    -- Diff management
     { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
     { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>",   desc = "Deny diff" },
   },
