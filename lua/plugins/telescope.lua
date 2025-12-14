@@ -1,13 +1,14 @@
 -- file searching / live greppin' / ...
 return {
-  { -- use telescope picker for select items in neovim
-    "nvim-telescope/telescope-ui-select.nvim",
-  },
-
   { -- telescope core
     'nvim-telescope/telescope.nvim',
     tag = '0.1.5',
-    dependencies = { 'nvim-lua/plenary.nvim', 'debugloop/telescope-undo.nvim', },
+    cmd = "Telescope",
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'debugloop/telescope-undo.nvim',
+      'nvim-telescope/telescope-ui-select.nvim',
+    },
     config = function()
       local opts = {
         extensions = {
@@ -33,29 +34,31 @@ return {
     end
   },
 
-  'jvgrootveld/telescope-zoxide',
-  config = function()
-    local t = require("telescope")
-    local z_utils = require("telescope._extensions.zoxide.utils")
+  {
+    'jvgrootveld/telescope-zoxide',
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+    cmd = "Telescope zoxide list",
+    config = function()
+      local t = require("telescope")
+      local z_utils = require("telescope._extensions.zoxide.utils")
 
-    -- Configure the extension
-    t.setup({
-      extensions = {
-        zoxide = {
-          prompt_title = "[ Walking on the shoulders of TJ ]",
-          mappings = {
-            default = {
-              after_action = function(selection)
-                print("Update to (" .. selection.z_score .. ") " .. selection.path)
-              end
+      t.setup({
+        extensions = {
+          zoxide = {
+            prompt_title = "[ Walking on the shoulders of TJ ]",
+            mappings = {
+              default = {
+                after_action = function(selection)
+                  print("Update to (" .. selection.z_score .. ") " .. selection.path)
+                end
+              },
+              ["<C-q>"] = { action = z_utils.create_basic_command("split") },
             },
-            ["<C-q>"] = { action = z_utils.create_basic_command("split") },
           },
         },
-      },
-    })
+      })
 
-    -- Load the extension
-    t.load_extension('zoxide')
-  end
+      t.load_extension('zoxide')
+    end
+  },
 }

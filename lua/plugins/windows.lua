@@ -1,6 +1,8 @@
 return {
   {
-    'nvim-mini/mini.animate', version = '*'
+    'nvim-mini/mini.animate',
+    version = '*',
+    event = "VeryLazy",
   },
   -- {
   --   "folke/edgy.nvim",
@@ -68,10 +70,11 @@ return {
   -- provides lsp updates in lower right corner
   {
     "j-hui/fidget.nvim",
+    event = "LspAttach",
     opts = {
       notification = {
         override_vim_notify = true,
       }
     },
-  }
+  },
 }

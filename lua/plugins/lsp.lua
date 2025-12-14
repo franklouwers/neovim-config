@@ -4,28 +4,24 @@ return {
   {
     'williamboman/mason.nvim',
     lazy = false,
-    config = function()
-      require("mason").setup({
-        ui = {
-          icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗"
-          }
-        }
-      })
-    end
+    opts = {
+      ui = {
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗",
+        },
+      },
+    },
   },
 
   -- Autocompletion
   {
     'saghen/blink.cmp',
+    event = "InsertEnter",
     dependencies = {
       { "saghen/blink.compat", version = "*", lazy = true, opts = {} },
-      -- 'rafamadriz/friendly-snippets',
     },
-
-    -- use a release tag to download pre-built binaries
     version = '*',
 
     ---@module 'blink.cmp'
@@ -157,55 +153,41 @@ return {
   },
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
-    config = function()
-      require('mason-tool-installer').setup {
-
-        -- a list of all tools you want to ensure are installed upon
-        -- start
-        ensure_installed = {
-          -- ANSIBLE
-          "ansiblels",
-          "jinja_lsp",
-
-          -- HELM
-          "helm_ls",
-
-          -- MARKDOWN
-          "marksman",
-
-          --- LUA
-          "lua_ls",   -- lua lsp
-          "luacheck", -- lua linter
-
-          -- RUBY
-          "ruby_lsp",   -- ruby lsp
-          "standardrb", -- ruby linting and style
-
-          -- TERRAFORM
-          "terraformls", -- terraform lsp
-          "tflint",      -- terraform linting
-
-          -- GOLANG
-          "gopls",         -- golang lsp
-          'golangci-lint', -- Golang lint
-          'goimports',     -- Golang fmt
-
-          -- PYTHON
-          "python-lsp-server",
-
-          -- ZSH / BASH
-          "beautysh", -- bash beautifier
-
-          -- GENERAL
-          'editorconfig-checker',
-          "semgrep", -- static analysis to detect bugs. go, json, js, php, python, ruby, ...
-          "trivy",   -- security scans, misconfigs in multiple languages (including go, docker, helm, ruby, terraform, ...
-
-        },
-        auto_update = true,
-        debounce_hours = 5, -- at least 5 hours between attempts to install/update
-      }
-    end
+    event = "VeryLazy",
+    opts = {
+      ensure_installed = {
+        -- ANSIBLE
+        "ansiblels",
+        "jinja_lsp",
+        -- HELM
+        "helm_ls",
+        -- MARKDOWN
+        "marksman",
+        -- LUA
+        "lua_ls",
+        "luacheck",
+        -- RUBY
+        "ruby_lsp",
+        "standardrb",
+        -- TERRAFORM
+        "terraformls",
+        "tflint",
+        -- GOLANG
+        "gopls",
+        "golangci-lint",
+        "goimports",
+        -- PYTHON
+        "python-lsp-server",
+        -- ZSH / BASH
+        "beautysh",
+        -- GENERAL
+        "editorconfig-checker",
+        "semgrep",
+        "trivy",
+      },
+      auto_update = true,
+      debounce_hours = 5,
+    },
   },
   -- adjust lua ls for lua-vim config
   {
