@@ -1,10 +1,55 @@
+local function toggleterm_provider()
+  local terminal = nil
+
+  return {
+    is_available = function()
+      return pcall(require, "toggleterm")
+    end,
+
+    setup = function()
+      local Terminal = require("toggleterm.terminal").Terminal
+      terminal = Terminal:new({ direction = "horizontal", size = 30 })
+    end,
+
+    open = function(cmd, env)
+      terminal.cmd = cmd
+      terminal.env = env
+      terminal:open()
+    end,
+
+    close = function()
+      if terminal then terminal:close() end
+    end,
+
+    simple_toggle = function(cmd, env)
+      terminal.cmd = cmd
+      terminal.env = env
+      terminal:toggle()
+    end,
+
+    focus_toggle = function(cmd, env)
+      terminal.cmd = cmd
+      terminal.env = env
+      if terminal:is_open() then
+        if terminal:is_focused() then terminal:close() else terminal:focus() end
+      else
+        terminal:open()
+      end
+    end,
+
+    get_active_bufnr = function()
+      return terminal and terminal.bufnr
+    end,
+  }
+end
+
 return {
   "coder/claudecode.nvim",
   dependencies = { "akinsho/toggleterm.nvim" },
   event = "VeryLazy",
   opts = {
     terminal = {
-      provider = "toggleterm",
+      provider = toggleterm_provider(),
       auto_close = true,
     }
   },
