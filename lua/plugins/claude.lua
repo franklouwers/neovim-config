@@ -22,8 +22,8 @@ local function setup_toggleterm_provider()
     setup = function(config)
       local Terminal = require("toggleterm.terminal").Terminal
       claude_terminal = Terminal:new({
-        direction = "vertical",
-        size = 80,
+        direction = "horizontal",
+        size = 100,
         on_open = function(t)
           vim.keymap.set({ "n", "t" }, toggle_key, function()
             t:toggle()
@@ -78,14 +78,11 @@ return {
   opts = {
     -- Send/Focus Behavior
     -- When true, successful sends will focus the Claude terminal if already connected
-    focus_after_send = false,
+    focus_after_send = true,
     -- Terminal Configuration
     terminal = {
-      split_side = "right",                   -- "left" or "right"
-      split_width_percentage = 0.30,
       provider = setup_toggleterm_provider(), -- "auto", "snacks", "native", "external", "none", or custom provider table
       auto_close = true,
-      --      snacks_win_opts = {}, -- Opts to pass to `Snacks.terminal.open()` - see Floating Window section below
     }
   },
   event = "VeryLazy",

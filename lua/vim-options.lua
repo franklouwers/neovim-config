@@ -72,16 +72,16 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- auto resize splits when the terminal's window is resized
-vim.api.nvim_create_autocmd("VimResized", {
-  command = "wincmd =",
-})
-
--- tf files are always terraform, not "tf" (whatever that is)
--- vim.filetype.add({
---   extension = {
---     tf = 'terraform'
---   }
+-- vim.api.nvim_create_autocmd("VimResized", {
+--   command = "wincmd =",
 -- })
+--
+-- tf files are always terraform, not "tf" (whatever that is)
+vim.filetype.add({
+  extension = {
+    tf = 'terraform'
+  }
+})
 
 -- format on save
 vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]

@@ -4,8 +4,8 @@ return {
   config = function()
     require("toggleterm").setup({
       open_mapping = [[<C-t>]],
-      direction = 'vertical',
-      size = 80
+      direction = 'horizontal',
+      size = 30
     })
 
     -- make moving in and out terminals easier
