@@ -47,12 +47,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- On neogit event, update neotree git status
-local group = vim.api.nvim_create_augroup('MyCustomNeogitEvents', { clear = true })
 vim.api.nvim_create_autocmd('User', {
   pattern = 'NeogitStatusRefreshed',
-  group = group,
+  group = vim.api.nvim_create_augroup('MyCustomNeogitEvents', { clear = true }),
   callback = function()
-    require("neo-tree.sources.manager").refresh("filesystem")
+    local ok, manager = pcall(require, "neo-tree.sources.manager")
+    if ok then manager.refresh("filesystem") end
   end
 })
 
@@ -84,4 +84,8 @@ vim.filetype.add({
 })
 
 -- format on save
-vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+vim.api.nvim_create_autocmd("BufWritePre", {
+  callback = function()
+    vim.lsp.buf.format()
+  end,
+})

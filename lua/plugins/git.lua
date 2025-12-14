@@ -1,5 +1,4 @@
 return {
-
   {
     "NeogitOrg/neogit",
     dependencies = {
