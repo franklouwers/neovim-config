@@ -1,7 +1,7 @@
 -- Native LSP configuration (Neovim 0.11+)
 
 -- Reduce LSP log verbosity (OFF, ERROR, WARN, INFO, DEBUG)
-vim.lsp.set_log_level('OFF')
+vim.lsp.log.set_level('OFF') 
 
 -- Reserve signcolumn space to avoid layout shift
 vim.o.signcolumn = 'yes'

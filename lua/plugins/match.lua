@@ -1,18 +1,13 @@
 return {
-  -- extends `%` support to language specific stuff, using treesitter
+  -- extends `%` support to language-specific matches
   {
     "andymass/vim-matchup",
     event = "BufReadPost",
-    config = function()
+    init = function()
       vim.g.matchup_matchparen_offscreen = { method = "popup" }
-      require 'nvim-treesitter.configs'.setup {
-        matchup = {
-          enable = true, -- mandatory, false will disable the whole extension
-          disable = {},  -- optional, list of language that will be disabled
-          -- [options]
-        },
-      }
-    end
+      -- Keep matchup independent from external Tree-sitter parser plugins.
+      vim.g.matchup_treesitter_enabled = false
+    end,
   },
   -- expand surround support. (eg change 'word' to [word] etc)
   {
